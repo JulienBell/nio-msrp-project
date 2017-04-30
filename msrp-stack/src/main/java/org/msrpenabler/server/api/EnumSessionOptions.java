@@ -1,0 +1,12 @@
+package org.msrpenabler.server.api;
+
+public enum EnumSessionOptions {
+
+	SESS_NOTIFY_EACH_CHUNCK,
+	SESS_NOTIFY_COMPLETED_CHUNCKED_MSG,
+	SESS_NOTIFY_FULL_RESPONSE,
+	
+	SESS_NOTIFY_MSG_RESPONSE,
+	SESS_NOTIFY_CHUNCK_RESPONSE
+	
+}

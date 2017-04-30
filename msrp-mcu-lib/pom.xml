@@ -1,0 +1,38 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+	<groupId>org.enablerim</groupId>
+	<artifactId>msrp-enabler</artifactId>
+	<version>1.0-SNAPSHOT</version>
+  </parent>
+
+  <groupId>org.enablerim.mculib</groupId>
+  <artifactId>msrp-mcu-lib</artifactId>
+  <packaging>jar</packaging>
+
+  <name>msrp-mcu-lib</name>
+  <version>1.0.CR1</version>
+    
+  <build>
+
+  </build>
+ 
+  <dependencies>
+	
+	<dependency>
+		<groupId>io.netty</groupId>
+		<artifactId>netty-all</artifactId>
+		<version>${netty.version}</version>
+	</dependency>
+	  
+	<dependency>
+		<groupId>org.enablerim.stack</groupId>
+		<artifactId>msrp-stack</artifactId>
+		<version>${msrp-stack.version}</version>
+	</dependency>
+  
+  </dependencies>
+
+</project>

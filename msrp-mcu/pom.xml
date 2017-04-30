@@ -1,0 +1,168 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>org.enablerim</groupId>
+		<artifactId>msrp-enabler</artifactId>
+		<version>1.0-SNAPSHOT</version>
+	</parent>
+
+	<groupId>org.enablerim.mcu</groupId>
+	<artifactId>msrp-mcu</artifactId>
+	<version>1.0.CR1</version>
+	<name>msrp-mcu</name>
+	<!-- packaging>appassembler:assemble</packaging -->
+
+	<dependencies>
+
+		<dependency>
+			<groupId>commons-configuration</groupId>
+			<artifactId>commons-configuration</artifactId>
+			<version>${commons-configuration.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.enablerim.mculib</groupId>
+			<artifactId>msrp-mcu-lib</artifactId>
+			<version>${msrp-mcu-lib.version}</version>
+			<scope>compile</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.enablerim.stack</groupId>
+			<artifactId>msrp-stack</artifactId>
+			<version>${msrp-stack.version}</version>
+			<scope>compile</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.enablerim.rest</groupId>
+			<artifactId>rest-lib</artifactId>
+			<version>1.0-CR</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.rest.stub</groupId>
+			<artifactId>simply-rest</artifactId>
+			<version>${simply-rest.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-math</artifactId>
+			<version>2.2</version>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.fusesource</groupId>
+			<artifactId>sigar</artifactId>
+			<version>1.6.4</version>
+		</dependency>
+
+	</dependencies>
+
+	<build>
+
+		<plugins>
+			<!-- plugin> <groupId>org.apache.maven.plugins</groupId> <artifactId>maven-dependency-plugin</artifactId> 
+				<version>${maven-dependency-plugin.version}</version> <executions> <execution> 
+				<id>copy-dependencies</id> <phase>package</phase> <goals> <goal>copy-dependencies</goal> 
+				</goals> <configuration> <outputDirectory>${project.build.directory}/lib</outputDirectory> 
+				<overWriteReleases>false</overWriteReleases> <overWriteSnapshots>false</overWriteSnapshots> 
+				<overWriteIfNewer>true</overWriteIfNewer> </configuration> </execution> </executions> 
+				</plugin> <plugin> <groupId>org.apache.maven.plugins</groupId> <artifactId>maven-jar-plugin</artifactId> 
+				<version>${maven-jar-plugin.version}</version> <configuration> <archive> 
+				<manifest> <addClasspath>true</addClasspath> <classpathPrefix>lib/</classpathPrefix> 
+				<mainClass>org.msrpenabler.mcu.start.McuStart</mainClass> </manifest> </archive> 
+				</configuration> </plugin -->
+
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>appassembler-maven-plugin</artifactId>
+				<version>1.8</version>
+				<executions>
+					<execution>
+						<id>assemble</id>
+						<goals>
+							<goal>assemble</goal>
+						</goals>
+						<phase>package</phase>
+					</execution>
+				</executions>
+				<configuration>
+					<programs>
+						<program>
+							<mainClass>org.msrpenabler.mcu.start.McuStart</mainClass>
+							<id>MsrpMcuServer</id>
+
+							<!-- Add two predefined command line arguments to the call of App3 -->
+							<!--commandLineArguments> <commandLineArgument>arg1</commandLineArgument> 
+								<commandLineArgument>arg2</commandLineArgument> </commandLineArguments -->
+						</program>
+						<program>
+							<mainClass>org.msrpenabler.mcu.start.McuStop</mainClass>
+							<id>MsrpMcuServerStop</id>
+						</program>
+					</programs>
+
+					<repositoryLayout>flat</repositoryLayout>
+
+					<!-- Set the target configuration directory to be used in the bin scripts -->
+					<configurationDirectory>conf</configurationDirectory>
+					<configurationSourceDirectory>config</configurationSourceDirectory>
+					<!-- Copy the contents from "/src/main/config" to the target configuration 
+						directory in the assembled application -->
+					<copyConfigurationDirectory>true</copyConfigurationDirectory>
+					<!-- Include the target configuration directory in the beginning of 
+						the classpath declaration in the bin scripts -->
+					<includeConfigurationDirectoryInClasspath>true</includeConfigurationDirectoryInClasspath>
+
+					<!-- set alternative assemble directory -->
+					<assembleDirectory>${project.build.directory}/MsrpMcuServer</assembleDirectory>
+					<!-- Extra JVM arguments that will be included in the bin scripts -->
+					<extraJvmArguments>-Xms128m -Dio.netty.leakDetectionLevel=paranoid -Djava.library.path="$BASEDIR/sigar-bin/lib" </extraJvmArguments>
+
+					<!-- Generate bin scripts for windows and unix pr default -->
+					<platforms>
+						<platform>windows</platform>
+						<platform>unix</platform>
+					</platforms>
+
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-antrun-plugin</artifactId>
+				<version>1.1</version>
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<goals>
+							<goal>run</goal>
+						</goals>
+						<configuration>
+							<tasks>
+								<echo
+									message="JBG -- Base dir:  ${basedir}  -- ${project.build.directory}" />
+								<copy todir="${project.build.directory}/MsrpMcuServer/sigar-bin">
+									<fileset dir="${basedir}/sigar-bin"/>
+								</copy>
+							</tasks>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
+			<!-- plugin> <groupId>org.apache.maven.plugins</groupId> <artifactId>maven-antrun-plugin</artifactId> 
+				<version>1.7</version> <executions> <execution> <phase>validate</phase> <goals> 
+				<goal>run</goal> </goals> <configuration> <tasks> <echo>******** Displaying 
+				value of property ********</echo> <echo>${java.home}</echo> </tasks> </configuration> 
+				</execution> </executions> </plugin -->
+		</plugins>
+
+	</build>
+
+</project>

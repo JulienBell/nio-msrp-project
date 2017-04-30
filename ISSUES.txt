@@ -1,0 +1,4 @@
+
+Current issues:
+	Ref counter seems not get back to 0 on chunks usage
+	On full message, start Byte is set 1 rather than 0 ...?

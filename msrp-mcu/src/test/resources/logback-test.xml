@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Example LOGBACK Configuration File
+http://logback.qos.ch/manual/configuration.html
+  -->
+<configuration>
+  <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+   <!-- encoders are assigned the type
+         ch.qos.logback.classic.encoder.PatternLayoutEncoder by default -->
+    <encoder>
+      <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36}.%M\(%L\) %msg%n</pattern>
+    </encoder>
+  </appender>
+ 
+  <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+    <file>C:/logs/test_mcu.log</file>
+    <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+      <!-- daily rollover -->
+      <fileNamePattern>msrp_mcu_%d{yyyy-MM-dd}.log</fileNamePattern>
+ 
+      <!-- keep 30 days' worth of history -->
+      <maxHistory>30</maxHistory>
+    </rollingPolicy>
+ 
+    <encoder>
+      <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{35}.%M\(%L\) %msg%n</pattern>
+    </encoder>
+  </appender>
+
+   <appender name="FILE_MSG" class="ch.qos.logback.core.rolling.RollingFileAppender">
+    <file>C:/logs/test_mcu_msg.log</file>
+    <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+      <!-- daily rollover -->
+      <fileNamePattern>msrp_mcu_%d{yyyy-MM-dd}.log</fileNamePattern>
+ 
+      <!-- keep 30 days' worth of history -->
+      <maxHistory>30</maxHistory>
+    </rollingPolicy>
+ 
+    <encoder>
+      <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{35}.%M\(%L\) %msg%n</pattern>
+    </encoder>
+  </appender>
+ 
+  <logger name="org.msrpenabler.mcu.test" level="info">
+    <appender-ref ref="FILE" />
+  </logger>
+  
+  <logger name="org.msrp.dump.decode" additivity="false" level="info">
+    <appender-ref ref="FILE_MSG" />
+  </logger>
+  <logger name="org.msrp.dump.encode" additivity="false" level="info">
+    <appender-ref ref="FILE_MSG" />
+  </logger>
+
+  <root level="info">
+    <appender-ref ref="STDOUT" />
+    <appender-ref ref="FILE" />
+  </root>
+  
+
+  
+</configuration>
