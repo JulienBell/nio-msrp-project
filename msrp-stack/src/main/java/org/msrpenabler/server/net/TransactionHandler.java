@@ -502,7 +502,7 @@ public class TransactionHandler {
 		channel.writeAndFlush(resp);
 	}
 	
-	@SuppressWarnings("static-method")
+	//@SuppressWarnings("static-method")
 	private void fireException(Exception exception) {
 		logger.error("Exception : ", exception);
 

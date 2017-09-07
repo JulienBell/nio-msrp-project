@@ -357,32 +357,32 @@ public class McuHttpServlet implements RestHttpServlet {
 		List<String> lstParam;
 		String param;
 		
-		lstParam = params.get(QueryParamsEnum.lockIn);
+		lstParam = params.get(QueryParamsEnum.lockIn.toString());
 		if (lstParam != null) {
 			param = lstParam.get(0);
 			lockInput = Boolean.parseBoolean(param);
 		}
 
-		lstParam = params.get(QueryParamsEnum.lockOut);
+		lstParam = params.get(QueryParamsEnum.lockOut.toString());
 		if (lstParam != null) {
 			param = lstParam.get(0);
 			lockOutput = Boolean.parseBoolean(param);
 		}
 		
-		lstParam = params.get(QueryParamsEnum.discardIn);
+		lstParam = params.get(QueryParamsEnum.discardIn.toString());
 		if (lstParam != null) {
 			param = lstParam.get(0);
 			discardInput = Boolean.parseBoolean(param);
 		}
 
-		lstParam = params.get(QueryParamsEnum.discardOut);
+		lstParam = params.get(QueryParamsEnum.discardOut.toString());
 		if (lstParam != null) {
 			param = lstParam.get(0);
 			discardOutput = Boolean.parseBoolean(param);
 		}
 
 		int inactivityTO=120;
-		lstParam = params.get(QueryParamsEnum.inactivityTO);
+		lstParam = params.get(QueryParamsEnum.inactivityTO.toString());
 		if (lstParam != null) {
 			param = lstParam.get(0);
 			inactivityTO = Integer.parseInt(param, 10 );
@@ -395,25 +395,25 @@ public class McuHttpServlet implements RestHttpServlet {
 		boolean notifSendChunckFailure = false ;
 
 		
-		lstParam = params.get(QueryParamsEnum.notifRcvMsg);
+		lstParam = params.get(QueryParamsEnum.notifRcvMsg.toString());
 		if (lstParam != null) {
 			param = lstParam.get(0);
 			notifRcvMsg = Boolean.parseBoolean(param);
 		}
 		
-		lstParam = params.get(QueryParamsEnum.notifRcvMsgChunck);
+		lstParam = params.get(QueryParamsEnum.notifRcvMsgChunck.toString());
 		if (lstParam != null) {
 			param = lstParam.get(0);
 			notifRcvMsgChunck = Boolean.parseBoolean(param);
 		}
 		
-		lstParam = params.get(QueryParamsEnum.notifSendChunckFailure);
+		lstParam = params.get(QueryParamsEnum.notifSendChunckFailure.toString());
 		if (lstParam != null) {
 			param = lstParam.get(0);
 			notifSendChunckFailure = Boolean.parseBoolean(param);
 		}
 		
-		lstParam = params.get(QueryParamsEnum.notifSendMsgFailure);
+		lstParam = params.get(QueryParamsEnum.notifSendMsgFailure.toString());
 		if (lstParam != null) {
 			param = lstParam.get(0);
 			notifSendMsgFailure = Boolean.parseBoolean(param);
